@@ -10,9 +10,6 @@ RUN { \
     echo "        'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD', ''),"; \
     echo "        'HOST': os.environ.get('MYSQL_HOST', 'db'),"; \
     echo "        'PORT': os.environ.get('MYSQL_PORT', '3306'),"; \
-    echo "        'OPTIONS': {"; \
-    echo "            'charset': 'utf8mb4'"; \
-    echo "        },"; \
     echo "        'TEST': {"; \
     echo "            'NAME': os.environ.get('MYSQL_TEST_DATABASE', 'test_openeats')"; \
     echo "        }"; \
