@@ -34,7 +34,8 @@ RUN { \
 RUN cp /startup/prod-entrypoint.sh /startup/prod-entrypoint.sh.new && { \
   head -n$(wc -l /startup/prod-entrypoint.sh | awk '{ print $1 - 1}') /startup/prod-entrypoint.sh; \
   echo -n "exec "; \
-  tail -n1 /startup/prod-entrypoint.sh; \
+  tail -n1 /startup/prod-entrypoint.sh | tr '\n' ' '; \
+  echo ' $@ '; \
   } > /startup/prod-entrypoint.sh.new && mv /startup/prod-entrypoint.sh.new /startup/prod-entrypoint.sh
 RUN cp base/gunicorn_start.sh base/gunicorn_start_new.sh && { \
   head -n$(wc -l base/gunicorn_start.sh | awk '{ print $1 - 1}') base/gunicorn_start.sh; \
@@ -42,6 +43,7 @@ RUN cp base/gunicorn_start.sh base/gunicorn_start_new.sh && { \
   echo '  --access-logfile - \'; \
   echo '  --error-logfile - \'; \
   echo '  --capture-output \'; \
+  echo '  --enable-stdio-inheritance \'; \
   echo '  $@'; \
   } > base/gunicorn_start_new.sh && mv base/gunicorn_start_new.sh base/gunicorn_start.sh
 ENTRYPOINT ["/startup/prod-entrypoint.sh"]
