@@ -15,6 +15,21 @@ RUN { \
     echo "        }"; \
     echo "    }"; \
     echo "}"; \
+    echo "LOGGING = {"; \
+    echo "    'version': 1,"; \
+    echo "    'disable_existing_loggers': False,"; \
+    echo "    'handlers': {"; \
+    echo "        'console': {"; \
+    echo "            'class': 'logging.StreamHandler',"; \
+    echo "        },"; \
+    echo "    },"; \
+    echo "    'loggers': {"; \
+    echo "        'django': {"; \
+    echo "            'handlers': ['console'],"; \
+    echo "            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),"; \
+    echo "        },"; \
+    echo "    },"; \
+    echo "}"; \
   } >> /code/base/settings.py
 RUN cp /startup/prod-entrypoint.sh /startup/prod-entrypoint.sh.new && { \
   head -n$(wc -l /startup/prod-entrypoint.sh | awk '{ print $1 - 1}') /startup/prod-entrypoint.sh; \
