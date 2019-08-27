@@ -16,7 +16,7 @@ RUN { \
     echo "    }"; \
     echo "}"; \
   } >> /code/base/settings.py
-RUN { \
+RUN cp base/gunicorn_start.sh base/gunicorn_start_new.sh && { \
   head -n$(wc -l base/gunicorn_start.sh | awk '{ print $1 - 1}') base/gunicorn_start.sh; \
   tail -n1 base/gunicorn_start.sh | sed -e 's/$/ \\/'; \
   echo '  --stdout_logfile=/dev/stdout \'; \
