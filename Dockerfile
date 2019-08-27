@@ -16,4 +16,10 @@ RUN { \
     echo "    }"; \
     echo "}"; \
   } >> /code/base/settings.py
+RUN { \
+  head -n$(wc -l base/gunicorn_start.sh | awk '{ print $1 - 1}') base/gunicorn_start.sh; \
+  tail -n1 base/gunicorn_start.sh | sed -e 's/$/ \\/'; \
+  echo '  --stdout_logfile=/dev/stdout \'; \
+  echo '  --redirect_stderr=true'; \
+  } >> base/gunicorn_start_new.sh && mv base/gunicorn_start_new.sh base/gunicorn_start.sh
 ENTRYPOINT ["/startup/prod-entrypoint.sh"]
