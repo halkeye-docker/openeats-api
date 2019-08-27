@@ -18,5 +18,5 @@ RUN { \
     echo "        }"; \
     echo "    }"; \
     echo "}"; \
-  } > /code/base/local_settings.py
+  } >> /code/base/settings.py
 ENTRYPOINT ["/startup/prod-entrypoint.sh"]
